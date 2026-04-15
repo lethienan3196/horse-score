@@ -9,7 +9,7 @@ interface SetupScreenProps {
 
 const SetupScreen: React.FC<SetupScreenProps> = ({ onStartGame, onJoinRoom, onViewHistory }) => {
   const [names, setNames] = useState<string[]>(['', '', '', '']);
-  const [roomId, setRoomId] = useState<string>('');
+  const [roomId, setRoomId] = useState<string>('123');
   const [error, setError] = useState<string | null>(null);
   const [isValid, setIsValid] = useState(false);
 
