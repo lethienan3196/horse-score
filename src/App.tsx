@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import SetupScreen from './components/SetupScreen';
+import Dashboard from './components/Dashboard';
 
 interface Player {
   name: string;
@@ -25,22 +26,10 @@ function App() {
       {!gameStarted ? (
         <SetupScreen onStartGame={handleStartGame} />
       ) : (
-        <div className="game-dashboard">
-          <header className="game-header">
-            <h1>Horse Score</h1>
-          </header>
-          <main className="player-grid">
-            {players.map((player, index) => (
-              <div key={index} className="player-card">
-                <h2>{player.name}</h2>
-                <div className="score-display">{player.score}</div>
-              </div>
-            ))}
-          </main>
-          <footer className="game-footer">
-            <button onClick={() => setGameStarted(false)}>Reset Game</button>
-          </footer>
-        </div>
+        <Dashboard 
+          players={players} 
+          onReset={() => setGameStarted(false)} 
+        />
       )}
     </div>
   );
