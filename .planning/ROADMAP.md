@@ -3,10 +3,15 @@
 ## Phase 1: Base Application & Player Setup
 - **Goal**: Core application UI with player naming and score initialization.
 - **Requirements**: SET-01, SET-02, SET-03.
+- **Plans**: 2 plans
 - **Success Criteria**:
   - [ ] 4 player names can be entered.
   - [ ] App starts with all scores at 0.
   - [ ] Layout is responsive on mobile screens.
+
+Plans:
+- [ ] 01-01-PLAN.md — Project Scaffolding & Setup Screen
+- [ ] 01-02-PLAN.md — Game Dashboard & Player Initialization
 
 ## Phase 2: Core Scoring & Real-time Totals
 - **Goal**: Implement zero-sum point transfer logic and score visualization.
