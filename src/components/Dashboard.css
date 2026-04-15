@@ -18,13 +18,20 @@
   font-size: 1.5rem;
 }
 
-.player-grid {
+.dashboard-main {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent body scroll, use inner scrolls if needed */
+}
+
+.player-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 1rem;
   padding: 1rem;
+  min-height: 50%; /* Ensure grid gets enough space */
 }
 
 .player-card {
