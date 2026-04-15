@@ -53,6 +53,31 @@
   margin-bottom: 2rem;
 }
 
+.manual-fallback {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.manual-fallback p {
+  margin-bottom: 1rem;
+  color: var(--color-text-muted);
+}
+
+.setup-link-button {
+  background-color: var(--color-secondary);
+  font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }

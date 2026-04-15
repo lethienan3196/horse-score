@@ -218,9 +218,16 @@ function App() {
   };
 
   const handleJoinRoom = (existingRoomId: string) => {
+    setPlayers([]);
+    setTransactions([]);
     setRoomId(existingRoomId);
     setGameStarted(true);
     setView('game');
+    
+    // Immediate sync request if socket is already connected
+    if (isConnected) {
+      requestSync();
+    }
   };
 
   const handleEndGame = () => {
@@ -320,6 +327,7 @@ function App() {
             receiverIndex={receiverIndex}
             onPlayerClick={handlePlayerClick}
             onEndGame={handleEndGame}
+            onManualSetup={() => setView('setup')}
           />
           {isModalOpen && giverIndex !== null && receiverIndex !== null && (
             <TransferModal

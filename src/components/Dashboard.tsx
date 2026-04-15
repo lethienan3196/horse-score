@@ -15,6 +15,7 @@ interface DashboardProps {
   receiverIndex: number | null;
   onPlayerClick: (index: number) => void;
   onEndGame: () => void;
+  onManualSetup: () => void;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ 
@@ -23,8 +24,22 @@ const Dashboard: React.FC<DashboardProps> = ({
   giverIndex, 
   receiverIndex, 
   onPlayerClick, 
-  onEndGame
+  onEndGame,
+  onManualSetup
 }) => {
+  const [showManualOption, setShowManualOption] = React.useState(false);
+
+  React.useEffect(() => {
+    if (players.length === 0) {
+      const timer = setTimeout(() => {
+        setShowManualOption(true);
+      }, 5000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowManualOption(false);
+    }
+  }, [players.length]);
+
   if (players.length === 0) {
     return (
       <div className="dashboard-container">
@@ -35,6 +50,15 @@ const Dashboard: React.FC<DashboardProps> = ({
           <div className="loading-spinner"></div>
           <h2>Syncing Game Data...</h2>
           <p>Connecting to room and fetching current scores.</p>
+          
+          {showManualOption && (
+            <div className="manual-fallback">
+              <p>Still waiting? No one else might be in this room.</p>
+              <button onClick={onManualSetup} className="setup-link-button">
+                Go Back to Player Setup
+              </button>
+            </div>
+          )}
         </main>
         <footer className="game-footer">
           <button className="end-game-button" onClick={onEndGame}>Cancel Join</button>

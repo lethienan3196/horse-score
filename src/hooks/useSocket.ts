@@ -8,20 +8,27 @@ export const useSocket = (roomId: string | null) => {
   const [isConnected, setIsConnected] = useState(false);
 
   const connect = useCallback(() => {
-    if (socketRef.current) return;
-    
-    socketRef.current = io(SOCKET_URL);
-
-    socketRef.current.on('connect', () => {
-      setIsConnected(true);
+    if (socketRef.current?.connected) {
       if (roomId) {
-        socketRef.current?.emit('join-room', roomId);
+        socketRef.current.emit('join-room', roomId);
       }
-    });
+      return socketRef.current;
+    }
+    
+    if (!socketRef.current) {
+      socketRef.current = io(SOCKET_URL);
 
-    socketRef.current.on('disconnect', () => {
-      setIsConnected(false);
-    });
+      socketRef.current.on('connect', () => {
+        setIsConnected(true);
+        if (roomId) {
+          socketRef.current?.emit('join-room', roomId);
+        }
+      });
+
+      socketRef.current.on('disconnect', () => {
+        setIsConnected(false);
+      });
+    }
 
     return socketRef.current;
   }, [roomId]);
@@ -36,12 +43,12 @@ export const useSocket = (roomId: string | null) => {
 
   useEffect(() => {
     if (roomId) {
-      connect();
+      const socket = connect();
+      // If already connected, emit join-room immediately
+      if (socket.connected) {
+        socket.emit('join-room', roomId);
+      }
     }
-    return () => {
-      // Don't disconnect immediately on roomId change if we want to keep connection alive
-      // but join-room is called in connect and on connect
-    };
   }, [roomId, connect]);
 
   const emitTransfer = useCallback((transfer: any) => {
