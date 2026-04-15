@@ -9,8 +9,17 @@ interface Player {
   score: number;
 }
 
+interface Transaction {
+  id: string;
+  giverName: string;
+  receiverName: string;
+  amount: number;
+  timestamp: number;
+}
+
 function App() {
   const [players, setPlayers] = useState<Player[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [gameStarted, setGameStarted] = useState(false);
   const [giverIndex, setGiverIndex] = useState<number | null>(null);
   const [receiverIndex, setReceiverIndex] = useState<number | null>(null);
@@ -22,6 +31,7 @@ function App() {
       score: 0
     }));
     setPlayers(initialPlayers);
+    setTransactions([]);
     setGameStarted(true);
   };
 
@@ -56,6 +66,9 @@ function App() {
   const performTransfer = (amount: number) => {
     if (giverIndex === null || receiverIndex === null) return;
 
+    const giver = players[giverIndex];
+    const receiver = players[receiverIndex];
+
     const newPlayers = [...players];
     newPlayers[giverIndex] = {
       ...newPlayers[giverIndex],
@@ -66,7 +79,16 @@ function App() {
       score: newPlayers[receiverIndex].score + amount
     };
 
+    const newTransaction: Transaction = {
+      id: crypto.randomUUID(),
+      giverName: giver.name,
+      receiverName: receiver.name,
+      amount: amount,
+      timestamp: Date.now(),
+    };
+
     setPlayers(newPlayers);
+    setTransactions(prev => [newTransaction, ...prev]);
     setIsModalOpen(false);
     setGiverIndex(null);
     setReceiverIndex(null);
@@ -80,6 +102,7 @@ function App() {
         <>
           <Dashboard 
             players={players} 
+            transactions={transactions}
             giverIndex={giverIndex}
             receiverIndex={receiverIndex}
             onPlayerClick={handlePlayerClick}
@@ -87,6 +110,7 @@ function App() {
               setGameStarted(false);
               setGiverIndex(null);
               setReceiverIndex(null);
+              setTransactions([]);
             }} 
           />
           {isModalOpen && giverIndex !== null && receiverIndex !== null && (
