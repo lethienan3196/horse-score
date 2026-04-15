@@ -14,7 +14,7 @@ interface DashboardProps {
   giverIndex: number | null;
   receiverIndex: number | null;
   onPlayerClick: (index: number) => void;
-  onReset: () => void;
+  onEndGame: () => void;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ 
@@ -23,12 +23,30 @@ const Dashboard: React.FC<DashboardProps> = ({
   giverIndex, 
   receiverIndex, 
   onPlayerClick, 
-  onReset 
+  onEndGame
 }) => {
+  if (players.length === 0) {
+    return (
+      <div className="dashboard-container">
+        <header className="game-header">
+          <h1>🐴 Horse Score</h1>
+        </header>
+        <main className="dashboard-main loading-container">
+          <div className="loading-spinner"></div>
+          <h2>Syncing Game Data...</h2>
+          <p>Connecting to room and fetching current scores.</p>
+        </main>
+        <footer className="game-footer">
+          <button className="end-game-button" onClick={onEndGame}>Cancel Join</button>
+        </footer>
+      </div>
+    );
+  }
+
   return (
     <div className="dashboard-container">
       <header className="game-header">
-        <h1>Horse Score</h1>
+        <h1>🐴 Horse Score</h1>
       </header>
       <main className="dashboard-main">
         <div className="player-grid">
@@ -46,7 +64,7 @@ const Dashboard: React.FC<DashboardProps> = ({
         <TransactionLog transactions={transactions} />
       </main>
       <footer className="game-footer">
-        <button className="reset-button" onClick={onReset}>Reset Game</button>
+        <button className="end-game-button" onClick={onEndGame}>End & Save Game</button>
       </footer>
     </div>
   );

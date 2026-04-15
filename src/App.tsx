@@ -172,8 +172,8 @@ function App() {
     });
 
     socket.on('state-synced', (state: any) => {
-      // Update state if we don't have a game started or if we're joining
-      if (!gameStarted || players.length === 0) {
+      // Update state if we don't have players or if we're joining
+      if (players.length === 0 || !gameStarted) {
         setPlayers(state.players);
         setTransactions(state.transactions);
         setGameStarted(state.gameStarted);
