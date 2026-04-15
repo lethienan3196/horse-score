@@ -3,10 +3,11 @@ import './SetupScreen.css';
 
 interface SetupScreenProps {
   onStartGame: (playerNames: string[], roomId: string) => void;
+  onJoinRoom: (roomId: string) => void;
   onViewHistory: () => void;
 }
 
-const SetupScreen: React.FC<SetupScreenProps> = ({ onStartGame, onViewHistory }) => {
+const SetupScreen: React.FC<SetupScreenProps> = ({ onStartGame, onJoinRoom, onViewHistory }) => {
   const [names, setNames] = useState<string[]>(['', '', '', '']);
   const [roomId, setRoomId] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
@@ -64,33 +65,52 @@ const SetupScreen: React.FC<SetupScreenProps> = ({ onStartGame, onViewHistory })
     }
   };
 
+  const handleJoinOnly = () => {
+    if (roomId.trim()) {
+      onJoinRoom(roomId.trim());
+    }
+  };
+
   return (
     <div className="setup-container">
       <header className="setup-header">
         <h1>🐴 Horse Score</h1>
-        <p>Enter 4 player names and a Room ID to begin</p>
+        <p>Start a new game or join an existing room</p>
       </header>
 
-      <form onSubmit={handleSubmit} className="setup-form">
-        <div className="room-setup">
-          <div className="input-group">
-            <label htmlFor="room-id">Room ID</label>
-            <div className="room-input-row">
-              <input
-                id="room-id"
-                type="text"
-                value={roomId}
-                onChange={(e) => setRoomId(e.target.value)}
-                placeholder="Enter or generate ID"
-                autoComplete="off"
-              />
-              <button type="button" onClick={generateRoomId} className="generate-button">
-                Generate
-              </button>
-            </div>
+      <div className="room-setup">
+        <div className="input-group">
+          <label htmlFor="room-id">Room ID</label>
+          <div className="room-input-row">
+            <input
+              id="room-id"
+              type="text"
+              value={roomId}
+              onChange={(e) => setRoomId(e.target.value)}
+              placeholder="Enter ID to Join"
+              autoComplete="off"
+            />
+            <button type="button" onClick={generateRoomId} className="generate-button">
+              Generate
+            </button>
           </div>
         </div>
+        <button 
+          type="button" 
+          onClick={handleJoinOnly} 
+          disabled={!roomId.trim()} 
+          className="join-button"
+        >
+          Join Existing Room
+        </button>
+      </div>
 
+      <div className="divider">
+        <span>OR</span>
+      </div>
+
+      <form onSubmit={handleSubmit} className="setup-form">
+        <p className="form-hint">Enter names to start a NEW room</p>
         <div className="inputs-grid">
           {names.map((name, index) => (
             <div key={index} className="input-group">

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import SetupScreen from './components/SetupScreen';
 import Dashboard from './components/Dashboard';
@@ -217,6 +217,12 @@ function App() {
     setView('game');
   };
 
+  const handleJoinRoom = (existingRoomId: string) => {
+    setRoomId(existingRoomId);
+    setGameStarted(true);
+    setView('game');
+  };
+
   const handleEndGame = () => {
     if (players.length > 0) {
       const archivedGame: ArchivedGame = {
@@ -300,6 +306,7 @@ function App() {
       {view === 'setup' && (
         <SetupScreen 
           onStartGame={handleStartGame} 
+          onJoinRoom={handleJoinRoom}
           onViewHistory={() => setView('history')} 
         />
       )}
