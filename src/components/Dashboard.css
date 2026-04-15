@@ -37,6 +37,20 @@
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.player-card.giver-selected {
+  border-color: #c0392b;
+  background-color: #fce4e4;
+  transform: scale(1.02);
+}
+
+.player-card.receiver-selected {
+  border-color: #27ae60;
+  background-color: #e8f5e9;
+  transform: scale(1.02);
 }
 
 .player-name {
