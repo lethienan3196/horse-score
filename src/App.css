@@ -1,55 +1,36 @@
 .app-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 1rem;
   width: 100%;
-  box-sizing: border-box;
-}
-
-.game-dashboard {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  background-color: var(--color-bg-main);
 }
 
-.game-header {
-  text-align: center;
-  color: var(--color-earth-brown);
+/* Global Transitions */
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity var(--transition-normal);
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity var(--transition-normal);
 }
 
-.player-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.player-card {
-  background-color: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  text-align: center;
-  border-top: 4px solid var(--color-stable-green);
-}
-
-.player-card h2 {
-  margin-bottom: 0.5rem;
-  color: var(--color-earth-brown);
-}
-
-.score-display {
-  font-size: 3rem;
-  font-weight: bold;
-  color: var(--color-stable-green);
-}
-
-.game-footer {
-  margin-top: 2rem;
-  text-align: center;
+/* Utility for responsive container */
+.container-narrow {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--space-4);
 }
 
 @media (max-width: 480px) {
-  .player-grid {
-    grid-template-columns: 1fr;
+  .app-container {
+    padding: 0;
   }
 }

@@ -74,8 +74,10 @@ const SetupScreen: React.FC<SetupScreenProps> = ({ onStartGame, onJoinRoom, onVi
   return (
     <div className="setup-container">
       <header className="setup-header">
-        <h1>🐴 Horse Score</h1>
-        <p>Start a new game or join an existing room</p>
+        <div className="icon-badge">🐴</div>
+        <h1>HORSE SCORE</h1>
+        <p className="subtitle">ELITE SCORE TRACKING</p>
+        <p className="location-tag">EST. 2026 • THE STABLES</p>
       </header>
 
       <div className="room-setup">

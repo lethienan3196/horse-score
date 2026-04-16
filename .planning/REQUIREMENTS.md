@@ -8,7 +8,7 @@
 - [ ] **SET-03**: Interface layout adapts to both landscape and portrait mobile screens.
 
 ### Scoring
-- [ ] **SCORE-01**: Transfer points from one player to another (A+1, B-1).
+- [ ] **SCORE-01**: Transfer points from one player to another (Giver+1, Receiver-1).
 - [ ] **SCORE-02**: Real-time update of all player totals.
 - [ ] **SCORE-03**: Total score across all 4 players always equals 0 (Zero-Sum check).
 

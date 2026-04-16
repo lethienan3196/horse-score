@@ -41,6 +41,19 @@ function App() {
     return null;
   });
 
+  const [currentPlayerName, setCurrentPlayerName] = useState<string | null>(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        return parsed.currentPlayerName || null;
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  });
+
   const { socket, isConnected, emitTransfer, emitSyncState, requestSync } = useSocket(roomId);
 
   const [history, setHistory] = useState<ArchivedGame[]>(() => {
@@ -121,10 +134,11 @@ function App() {
       transactions,
       gameStarted,
       currentView: view,
-      roomId
+      roomId,
+      currentPlayerName
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
-  }, [history, players, transactions, gameStarted, view, roomId]);
+  }, [history, players, transactions, gameStarted, view, roomId, currentPlayerName]);
 
   // Handle socket events
   useEffect(() => {
@@ -214,6 +228,7 @@ function App() {
     setTransactions([]);
     setGameStarted(true);
     setRoomId(newRoomId);
+    setCurrentPlayerName(null);
     setView('game');
   };
 
@@ -222,6 +237,7 @@ function App() {
     setTransactions([]);
     setRoomId(existingRoomId);
     setGameStarted(true);
+    setCurrentPlayerName(null);
     setView('game');
     
     // Immediate sync request if socket is already connected
@@ -230,7 +246,7 @@ function App() {
     }
   };
 
-  const handleEndGame = () => {
+  const handleSaveGame = () => {
     if (players.length > 0) {
       const archivedGame: ArchivedGame = {
         id: crypto.randomUUID(),
@@ -239,14 +255,19 @@ function App() {
       };
       setHistory(prev => [archivedGame, ...prev]);
     }
-    
-    setGameStarted(false);
-    setPlayers([]);
-    setTransactions([]);
-    setGiverIndex(null);
-    setReceiverIndex(null);
-    setRoomId(null);
-    setView('setup');
+  };
+
+  const handleResetGame = () => {
+    if (window.confirm('Are you sure you want to end this game? Unsaved changes will be lost.')) {
+      setGameStarted(false);
+      setPlayers([]);
+      setTransactions([]);
+      setGiverIndex(null);
+      setReceiverIndex(null);
+      setRoomId(null);
+      setCurrentPlayerName(null);
+      setView('setup');
+    }
   };
 
   const handlePlayerClick = (index: number) => {
@@ -308,6 +329,12 @@ function App() {
     emitTransfer(newTransaction);
   };
 
+  const handleClearHistory = () => {
+    if (window.confirm('Are you sure you want to clear all archived games?')) {
+      setHistory([]);
+    }
+  };
+
   return (
     <div className="app-container">
       {view === 'setup' && (
@@ -325,9 +352,13 @@ function App() {
             transactions={transactions}
             giverIndex={giverIndex}
             receiverIndex={receiverIndex}
+            currentPlayerName={currentPlayerName}
+            onSelectIdentity={(name) => setCurrentPlayerName(name)}
             onPlayerClick={handlePlayerClick}
-            onEndGame={handleEndGame}
+            onSaveGame={handleSaveGame}
+            onResetGame={handleResetGame}
             onManualSetup={() => setView('setup')}
+            onViewHistory={() => setView('history')}
           />
           {isModalOpen && giverIndex !== null && receiverIndex !== null && (
             <TransferModal
@@ -344,6 +375,7 @@ function App() {
         <HistoryScreen 
           history={history} 
           onBack={() => setView('setup')} 
+          onClearHistory={handleClearHistory}
         />
       )}
     </div>

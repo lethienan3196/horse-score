@@ -19,11 +19,10 @@ A mobile-optimized web application for 4 players to record and track scores in r
 - [ ] **Real-time Totals**: Dashboard showing current total score for each player at all times.
 - [ ] **Game Persistence**: Save the final state of each game to local history.
 - [ ] **History View**: Ability to review previous game totals.
+- [ ] **Real-time Multiplayer**: Synchronize scores across multiple devices using WebSockets.
 
 ### Out of Scope
-- **Backend/Accounts**: No server-side storage or user authentication.
 - **Flexible Player Count**: Hard-coded for exactly 4 players.
-- **Online Multiplayer**: Local device usage only; no real-time syncing across multiple phones.
 
 ## Key Decisions
 | Decision | Rationale | Outcome |

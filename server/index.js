@@ -4,7 +4,8 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 
 const app = express();
-app.use(cors());
+const CLIENT_URL = process.env.CLIENT_URL || '*';
+app.use(cors({ origin: CLIENT_URL }));
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {

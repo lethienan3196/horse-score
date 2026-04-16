@@ -14,17 +14,13 @@ const TransferModal: React.FC<TransferModalProps> = ({
   onTransfer, 
   onCancel 
 }) => {
-  const [amount, setAmount] = useState<string>('1');
+  const [amount, setAmount] = useState<number>(20);
+  const quickAmounts = [10, 20];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const numAmount = parseInt(amount, 10);
-    if (!isNaN(numAmount) && numAmount > 0) {
-      onTransfer(numAmount);
-    }
+    onTransfer(amount);
   };
-
-  const isInvalid = !amount || isNaN(parseInt(amount, 10)) || parseInt(amount, 10) <= 0;
 
   return (
     <div className="modal-overlay">
@@ -37,20 +33,23 @@ const TransferModal: React.FC<TransferModalProps> = ({
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="amount">Amount</label>
-            <input 
-              id="amount"
-              type="number" 
-              inputMode="numeric"
-              value={amount} 
-              onChange={(e) => setAmount(e.target.value)}
-              autoFocus
-              onFocus={(e) => e.target.select()}
-            />
+            <label>Select Amount</label>
+            <div className="quick-amounts">
+              {quickAmounts.map(q => (
+                <button 
+                  key={q}
+                  type="button" 
+                  className={`quick-amount-btn ${amount === q ? 'active' : ''}`}
+                  onClick={() => setAmount(q)}
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="modal-actions">
             <button type="button" className="cancel-button" onClick={onCancel}>Cancel</button>
-            <button type="submit" className="confirm-button" disabled={isInvalid}>Transfer</button>
+            <button type="submit" className="confirm-button">Transfer {amount}</button>
           </div>
         </form>
       </div>

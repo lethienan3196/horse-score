@@ -1,0 +1,153 @@
+.history-screen {
+  padding: var(--space-10) var(--space-6);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-10);
+  border-bottom: 2px solid var(--color-accent-500);
+  padding-bottom: var(--space-4);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.mini-badge {
+  font-size: 1.5rem;
+  background: white;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-accent-500);
+}
+
+.history-header h1 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent-500);
+  font-weight: 900;
+}
+
+.clear-history-btn {
+  background: rgba(139, 0, 0, 0.1);
+  border: 1px solid rgba(139, 0, 0, 0.2);
+  color: var(--color-danger);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  box-shadow: none;
+  border-radius: var(--radius-full);
+}
+
+.clear-history-btn:hover:not(:disabled) {
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+  color: white;
+}
+
+.clear-history-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.back-button {
+  background: var(--color-secondary-500);
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.no-history {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin-top: var(--space-10);
+  font-size: var(--font-size-lg);
+}
+
+.history-item {
+  background: var(--color-bg-card);
+  backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-diffuse);
+  border: 1px solid var(--color-border);
+  border-left: 8px solid var(--color-accent-500);
+  transition: all var(--transition-premium);
+}
+
+.history-item:hover {
+  transform: translateX(10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.history-item-header {
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.game-date {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--color-secondary-500);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.history-players {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.history-player {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: white;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-inner);
+}
+
+.player-name {
+  font-weight: 700;
+  color: var(--color-text-main);
+  font-size: var(--font-size-base);
+}
+
+.player-score {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--font-size-xl);
+}
+
+.player-score.positive { color: var(--color-success); }
+.player-score.negative { color: var(--color-danger); }
+
+@media (max-width: 600px) {
+  .history-players {
+    grid-template-columns: 1fr;
+  }
+}
